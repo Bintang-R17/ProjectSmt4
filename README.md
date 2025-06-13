@@ -1,6 +1,11 @@
 # ProjectSmt4
 # Campus Project Chapter 4
 
+![License](https://img.shields.io/badge/license-MIT-green)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Last commit](https://img.shields.io/github/last-commit/username/PROJECTSMT4)
+![Repo size](https://img.shields.io/github/repo-size/username/PROJECTSMT4)
+
 Sistem Informasi Klinik berbasis PHP Native yang dirancang untuk mengelola rekam medis, jadwal konsultasi, serta integrasi pengambilan keputusan hasil laboratorium menggunakan metode SPK (Sistem Pendukung Keputusan) dan LLM (Large Language Model).
 
 ---
