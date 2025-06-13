@@ -85,10 +85,3 @@ PROJECTSMT4/
 - Hanya manajemen users saja yang baru jadi ( atribut masih kurang )
 
 ---
-
-## 📌 Penutup
-
-Proyek ini merupakan bagian dari tugas akhir _Chapter 4_ Semester 4 Informatika.  
-Tujuannya adalah membangun sistem informasi klinik modern dengan pendekatan integrasi kecerdasan buatan dalam pengambilan keputusan medis.
-
----
