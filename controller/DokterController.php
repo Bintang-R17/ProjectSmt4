@@ -29,8 +29,10 @@ if (!$user_id) {
     
     // Simpan ke database
     if ($dokter->create()) {
-        header('Location: index.php?page=dashboard-admin');
-        exit;
+            // setelah data berhasil ditambahkan
+            $_SESSION['success'] = "Data berhasil ditambahkan!";
+            header("Location: index.php?page=manage-user");
+            exit();
     } else {
         echo "Gagal menyimpan data dokter.";
     }

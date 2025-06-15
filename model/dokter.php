@@ -1,6 +1,7 @@
 <?php
 // models/Dokter.php
 require_once __DIR__ . '/../autoload/autoloads.php';
+require_once __DIR__ . '/user.php';
 class Dokter extends User {
     private $table_name = "dokter";
 

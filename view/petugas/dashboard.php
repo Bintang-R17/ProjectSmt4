@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <h6 class="mb-1">Input hasil lab pasien</h6>
+                                            <h6 class="mb-1">Kirim hasil lab pasien</h6>
                                             <small class="text-muted">dari tabel <code class="bg-light px-1">hasil_lab</code></small>
                                         </div>
                                         <button class="btn btn-outline-warning">
@@ -125,21 +125,6 @@
                                         </div>
                                         <button class="btn btn-outline-success">
                                             <i class="fas fa-arrow-right"></i> Atur
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="list-group-item d-flex align-items-center">
-                                        <div class="me-3">
-                                            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                                                <i class="fas fa-comments"></i>
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="mb-1">Input awal konsultasi bila diperlukan</h6>
-                                            <small class="text-muted">Membantu mempersiapkan proses konsultasi</small>
-                                        </div>
-                                        <button class="btn btn-outline-secondary">
-                                            <i class="fas fa-arrow-right"></i> Input
                                         </button>
                                     </div>
                                 </div>

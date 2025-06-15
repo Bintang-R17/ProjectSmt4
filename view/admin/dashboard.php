@@ -1,7 +1,4 @@
 <?php include __DIR__ . '/../partials/layout.php';?>
-<body class="bg-light">
-    
-
     <!-- Main Content -->
     <div class="container-fluid mt-4">
         <div class="row">

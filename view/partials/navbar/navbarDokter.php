@@ -21,12 +21,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#konsultasi">
-                    <i class="fas fa-comments"></i>
-                    <span>Konsultasi</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="#rekam-medis">
                     <i class="fas fa-file-medical"></i>
                     <span>Rekam Medis</span>
@@ -42,6 +36,12 @@
                 <a class="nav-link" href="#rekomendasi">
                     <i class="fas fa-robot"></i>
                     <span>AI Rekomendasi</span>
+                </a>
+            </li>
+                <li>
+                    <a class="nav-link" href="index.php?page=logout">
+                        <i class="fas fa-sign-out-alt"></i> 
+                    Logout
                 </a>
             </li>
         </ul>

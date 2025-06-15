@@ -51,7 +51,7 @@ switch ($page) {
         break;
 
     case 'dashboard-dokter':
-        checkRole('dokter');
+        // checkRole('dokter');
         require 'view/dokter/dashboard.php';
         break;
 

@@ -69,8 +69,9 @@ class UserController {
     $user->role = $_POST['role'];
 
     if ($user->update()) {
-        header('Location: index.php?page=dashboard-admin&status=success');
-        exit;
+        $_SESSION['success'] = "Data berhasil diupdate!";
+            header("Location: index.php?page=manage-user");
+            exit();
     } else {
         header('Location: index.php?page=dashboard-admin&status=error');
         exit;
@@ -78,25 +79,71 @@ class UserController {
     }
 
     public function deleteUser() {
-        if (!isset($_GET['id'])) {
-            echo "ID user tidak ditemukan.";
+    // Set header untuk JSON response
+    header('Content-Type: application/json');
+    
+    // Cek apakah request method adalah POST
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Method tidak diizinkan. Gunakan POST.'
+        ]);
+        return;
+    }
+    
+    // Cek apakah ID ada dalam POST data
+    if (!isset($_POST['id']) || empty($_POST['id'])) {
+        echo json_encode([
+            'success' => false, 
+            'message' => 'ID user tidak ditemukan atau kosong.'
+        ]);
+        return;
+    }
+    
+    try {
+        $id = intval($_POST['id']); // Konversi ke integer untuk keamanan
+        
+        // Validasi ID harus lebih dari 0
+        if ($id <= 0) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'ID user tidak valid.'
+            ]);
             return;
         }
-
-        $user = new User;
-        $user->id = $_GET['id'];
-
-        if ($user->delete()) {
-            header('Location: index.php?page=dashboard-admin&status=deleted');
-            exit;
+        
+        // Buat instance User dan hapus data
+        $userModel = new User();
+        $userModel->id = $id;
+                
+        // Eksekusi delete
+        $result = $userModel->delete();
+        
+        if ($result) {
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Data user berhasil dihapus.'
+            ]);
         } else {
-            echo "Gagal menghapus user.";
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Gagal menghapus data user. Silakan coba lagi.'
+            ]);
         }
+        
+    } catch (Exception $e) {
+        // Log error untuk debugging (sesuaikan dengan sistem logging Anda)
+        error_log("Error deleting user: " . $e->getMessage());
+        
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Terjadi kesalahan sistem. Silakan coba lagi.'
+        ]);
     }
+}
 
     public function manageUser(){
         require __DIR__ . '/../view/admin/manage/dokter.php';
     }
-    
 }
 ?>

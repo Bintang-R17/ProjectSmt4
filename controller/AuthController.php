@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../autoload/autoloads.php';
 
-
+startSession();
 class AuthController {
     public function loginForm() {
         require __DIR__ . '/../view/login/index.php';    
@@ -42,10 +42,7 @@ class AuthController {
     }
     
     public function logout() {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-           // Mulai session
+        startSession();             // Mulai session jika belum dimulai
         session_unset();           // Hapus semua variabel session
         session_destroy();         // Hancurkan session
         header("Location: index.php?page=login");  // Redirect ke halaman login

@@ -40,5 +40,11 @@
                     <span>Notifikasi</span>
                 </a>
             </li>
+            <li>
+                <a class="nav-link" href="index.php?page=logout">
+                    <i class="fas fa-sign-out-alt"></i> 
+                    Logout
+                </a>
+            </li>
         </ul>
     </nav>
