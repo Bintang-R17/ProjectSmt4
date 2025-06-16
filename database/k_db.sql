@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 13, 2025 at 04:27 PM
+-- Generation Time: Jun 16, 2025 at 04:37 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -55,7 +55,7 @@ CREATE TABLE `dokter` (
 --
 
 INSERT INTO `dokter` (`id`, `user_id`, `spesialisasi`) VALUES
-(4, 47, 'Dermatologi');
+(7, 65, 'Neurologi');
 
 -- --------------------------------------------------------
 
@@ -146,8 +146,7 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id`, `user_id`, `kontak`) VALUES
-(1, 31, '085155244833'),
-(5, 55, '085155244833');
+(9, 66, '085155244833');
 
 -- --------------------------------------------------------
 
@@ -203,14 +202,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `role`) VALUES
-(2, 'asd', '123', 'Rizqi Anugrah', 'admin'),
-(31, 'bintangsaca', '$2y$10$JgAf9qP5bBTYFAUDv3W2FuG1edaKIGCXbptwo5.otds16AuKUAQnK', 'saca', 'petugas'),
-(42, 'bbb', '$2y$10$YNx97vb.LfKfmeCrTQ5CJO74TkwS5VCF00dS19VmBsBBg/7KROTdW', 'Rizqi Andiria', 'dokter'),
-(47, 'qwe', '$2y$10$5Tz7/0zV4HUqAaSm1TT6O.UXq4sHMpQjjUF9.W3NUMsILX/fTnPau', 'qwe', 'dokter'),
-(49, 'zxc', '$2y$10$TKBUN3ioXFBZzr2.73v87OVQ3.pl5hFnwQo3XjR6RfEE7/YXkeL.a', 'zxc', 'admin'),
-(53, 'ads', '$2y$10$aqVi4fdi3XJlxFxlUCvRvOqtL8K9rCKnRdwtCcbHxAcx.i1dBZKP.', 'ads', 'pasien'),
-(54, '123', '$2y$10$SBd1neRPMKzO.HEHgp2wgO5Bt1PWAYKA.a7XyZ.ox3jv1rOJ5MeZi', '123', 'pasien'),
-(55, '321', '$2y$10$L7ndyNKYBc9etjuLkMqWZOl1Z3JXSgPpmK6JDz3SCsLSkzqzcWemW', '321', 'petugas');
+(2, 'asd', '$2y$10$kl9hG0Bm6uVdHVDdC.M.e.K8CjoLxQXet8jzDbt./5AFBh313bqGu', 'Rizqi Anugrahaa', 'admin'),
+(63, 'wer', '$2y$10$1MzD/5ujbNfdhEtReeWL..il/bRb6.UDiX.j40HRlPdNdyX3IqIWq', 'wer', 'pasien'),
+(65, '123', '$2y$10$saKYnNkIlWpBLyfXAnllQOa.FTmiMR70cm2N/SlrsDTLHPt9U9n1a', '123', 'dokter'),
+(66, 'qwe', '$2y$10$d8Gw12MKuXptX.s.6t7p/.utj3e19emWj3FZY0GJtx56HZFafA8Ra', 'qwe', 'petugas');
 
 --
 -- Indexes for dumped tables
@@ -310,7 +305,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `hasil_lab`
@@ -346,7 +341,7 @@ ALTER TABLE `pasien`
 -- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `rekam_medis`
@@ -364,7 +359,7 @@ ALTER TABLE `spk_hasil`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- Constraints for dumped tables
