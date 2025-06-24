@@ -129,7 +129,7 @@ class Dokter extends User {
         $stmt->execute();
         return $stmt->get_result();
     }
-
+    
     /** GET semua jenis spesialisasi */
     public function getAllSpesialisasi() {
         $query = "SELECT DISTINCT spesialisasi FROM {$this->table_name} ORDER BY spesialisasi";

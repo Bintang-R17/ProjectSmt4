@@ -1,6 +1,44 @@
-<!-- Load Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Yakin ingin menghapus?',
+        text: 'Data ini tidak bisa dikembalikan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('index.php?page=delete-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'id=' + encodeURIComponent(id)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Berhasil!', data.message, 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Gagal!', data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus.', 'error');
+            });
+        }
+    });
+}
+</script>
+
+
     <script>
         // Sidebar toggle functionality
         const sidebar = document.getElementById('sidebar');
@@ -56,21 +94,6 @@
                 }
             });
         }, 8000);
-
-        // Quick action buttons functionality
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (this.textContent.includes('Ajukan Konsultasi')) {
-                    alert('Fitur ajukan konsultasi akan membuka form untuk membuat permintaan konsultasi baru');
-                } else if (this.textContent.includes('Lihat Jadwal')) {
-                    alert('Fitur lihat jadwal akan menampilkan semua jadwal konsultasi pasien');
-                } else if (this.textContent.includes('Riwayat Medis')) {
-                    alert('Fitur riwayat medis akan menampilkan semua rekam medis pasien');
-                } else if (this.textContent.includes('Hasil Lab')) {
-                    alert('Fitur hasil lab akan menampilkan semua hasil laboratorium pasien');
-                }
-            });
-        });
     </script>
     </body>
 </html>

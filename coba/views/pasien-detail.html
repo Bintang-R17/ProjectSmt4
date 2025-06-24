@@ -1,0 +1,13 @@
+<h1>Detail Pasien</h1>
+<div id="pasien-detail">
+  <p>Memuat data pasien ID dari URL...</p>
+</div>
+<script>
+  const pasienId = location.hash.split("/")[2];
+  // Simulasi ambil data
+  document.getElementById("pasien-detail").innerHTML = `
+    <p><strong>ID Pasien:</strong> ${pasienId}</p>
+    <p>Nama: Pasien ${pasienId}</p>
+    <a href="#/pasien/${pasienId}/hasil-lab">Lihat Hasil Lab</a>
+  `;
+</script>

@@ -142,8 +142,17 @@ class UserController {
     }
 }
 
-    public function manageUser(){
-        require __DIR__ . '/../view/admin/manage/dokter.php';
-    }
+    public function manageUser() {
+        $database = new Database();
+        $db = $database->getConnection();
+        $user = new User();
+
+        $dokterList = $user->getByRole('dokter');
+        $adminList = $user->getByRole('admin');
+        $petugasList = $user->getByRole('petugas');
+        $pasienList = $user->getByRole('pasien');
+
+    include_once __DIR__ . '/../view/admin/manage/dokter.php';
+}
 }
 ?>

@@ -69,13 +69,14 @@ switch ($page) {
     case 'delete-user';
         $user = new UserController();
         $user->deleteUser();
+        break;
 
     case 'edit-user';
         $user = new UserController();
         $user->showUser();
         break;
 
-        case 'update-user';
+    case 'update-user';
         checkRole('admin'); 
         $user = new UserController();
         $user->updateUser();
@@ -86,11 +87,39 @@ switch ($page) {
         require 'view/admin/create/index.php';
         break;
     
-        case 'manage-user';
+    case 'manage-user';
         $user = new UserController();
         $user->manageUser();
+        break;
+    
+    // DOKTER //
+    case 'list-pasien':
+        $controller = new DokterController();
+        $controller->listPasien();
+        break;
+    case 'analyze-lab':
+        $controller = new MedicalAnalysisController();
+        $controller->handleApiRequest();
+        break;
+    case 'manage-pasien';
+        $dokter = new DokterController();
+        $dokter->listPasien();
+        break;
+    case 'detail-pasien':
+        $dokter = new DokterController();
+        $dokter->listHasilLabPasien($_GET['id']);
+        break;
+    
+    case 'detail-hasil-lab':
+    $controller = new MedicalAnalysisController();
+    $controller->showLabResultDetail($_GET['id']); // id = hasil_lab_id
+    break;
+    
+    // case 'jadwal-konsultasi':
+    //     $petugas = new JadwalController();
+    //     $petugas->listJadwal();
+    //     break;
 
-    // HALAMAN LAINNYA
     default:
         echo "404 - Halaman tidak ditemukan.";
         break;

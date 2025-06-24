@@ -142,5 +142,36 @@ class Pasien extends User {
         
         return $stmt->get_result();
     }
+
+    // models/Pasien.php
+
+public function getLabDetailsWithParametersByUserId($user_id) {
+    $query = "
+        SELECT 
+            hl.id AS hasil_lab_id,
+            hl.tanggal,
+            hl.catatan,
+            jp.nama AS jenis_pemeriksaan,
+            hp.nama_parameter,
+            hp.nilai,
+            hp.nilai_min,
+            hp.nilai_max,
+            hp.satuan
+        FROM pasien p
+        JOIN hasil_lab hl ON hl.pasien_id = p.id
+        JOIN jenis_pemeriksaan jp ON hl.jenis_id = jp.id
+        JOIN hasil_parameter hp ON hp.hasil_lab_id = hl.id
+        WHERE p.user_id = ?
+        ORDER BY hl.tanggal DESC, hl.id, hp.nama_parameter
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 }
 ?>

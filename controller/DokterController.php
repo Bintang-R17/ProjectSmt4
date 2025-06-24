@@ -38,6 +38,58 @@ if (!$user_id) {
     }
 }
 
+    public function listPasien() {
+        $db = new Database();
+        $conn = $db->getConnection();
+        
+        $pasienModel = new Pasien($db);
+        $data_pasien = $pasienModel->readAll();
+
+        include __DIR__ . '/../view/dokter/list-pasien.php'; // arahkan ke view list
+    }
+
+
+public function listHasilLabPasien($user_id) {
+
+    // Koneksi ke database
+    $database = new Database();
+    $db = $database->getConnection();
+
+    // Ambil info pasien (opsional untuk ditampilkan di atas)
+    $pasienModel = new Pasien($db);
+    $pasien = $pasienModel->getByUserId($user_id); // kamu bisa sesuaikan method-nya
+
+    // Ambil semua hasil lab + parameter
+    $labDAO = new LabResultsDAO($db);
+    $labData = $labDAO->getAllLabResultsWithParameters($user_id); // method ini kamu sudah punya atau bisa copy dari jawaban sebelumnya
+
+    // Kirim ke view
+    require __DIR__ . '/../view/dokter/detail-pasien.php';
+}
+
+
+public function detailPasienByUserId($user_id) {
+    require_once __DIR__ . '/../model/Pasien.php';
+
+    $db = (new Database())->getConnection();
+    $pasienModel = new Pasien($db);
+
+    // Ambil hasil lab dengan join (via model)
+    $labData = $pasienModel->getLabDetailsWithParametersByUserId($user_id);
+
+    // Ambil data pasien untuk header (opsional)
+    $pasienData = $pasienModel->getByUserId($user_id) ? $pasienModel : null;
+
+    require __DIR__ . '/../view/dokter/detail-pasien.php';
+}
+
+
+
+
+
+
+
+
 
     
 }

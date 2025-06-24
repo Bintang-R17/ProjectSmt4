@@ -1,180 +1,112 @@
-<?php include __DIR__ . '/../partials/layout.php';?>
+<?php
+// Simulasi data jika tidak pakai koneksi database
+$jadwal_hari_ini = 3;
+$total_pasien = 45;
+$rekam_medis_bulan_ini = 20;
+$hasil_lab_baru = 7;
+?>
 
-    <!-- Main Content -->
-    <div class="main-content" id="mainContent">
-        <!-- Top Navbar -->
-        <div class="top-navbar">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h3 class="mb-0">Dashboard Dokter</h3>
-                    <small class="text-muted">Selamat datang, Dr. [Nama Dokter]</small>
-                </div>
-                <div>
-                    <button class="btn btn-outline-primary me-2">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge bg-danger">3</span>
-                    </button>
-                    <button class="btn btn-primary">
-                        <i class="fas fa-user"></i> Profile
-                    </button>
-                </div>
-            </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Dokter</title>
+  <link rel="stylesheet" href="http://localhost/projectSmt4/assets/css/dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dokter">
+  <!-- Sidebar -->
+  <div class="sidebar dokter">
+    <h2><i class="fas fa-user-md"></i> Dashboard Dokter</h2>
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> Daftar Pasien</a></li>
+      <li><a href="#"><i class="fas fa-calendar-alt"></i> Jadwal Konsultasi</a></li>
+      <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Header -->
+    <header class="navbar navbar-dokter">
+      <div class="welcome">
+        <h1><i class="fas fa-user-md"></i> Dashboard Dokter</h1>
+        <p>Selamat datang kembali, Dokter!</p>
+      </div>
+      <div class="profile">
+        <i class="fas fa-bell"></i>
+        <div class="dropdown">
+          <i class="fas fa-user-circle"></i> Dokter
+          <div class="dropdown-content">
+            <a href="#">Profil</a>
+            <a href="#">Pengaturan</a>
+            <a href="index.php?page=logout">Logout</a>
+          </div>
         </div>
+      </div>
+    </header>
 
-        <!-- Content Wrapper -->
-        <div class="content-wrapper">
-            <!-- Statistics Cards -->
-            <div class="row mb-4">
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="stats-card">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="stats-number">12</div>
-                                <div class="text-muted">Jadwal Hari Ini</div>
-                            </div>
-                            <i class="fas fa-calendar-day fa-2x text-primary"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="stats-card warning">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="stats-number">8</div>
-                                <div class="text-muted">Konsultasi Menunggu</div>
-                            </div>
-                            <i class="fas fa-clock fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="stats-card success">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="stats-number">25</div>
-                                <div class="text-muted">Rekam Medis Baru</div>
-                            </div>
-                            <i class="fas fa-file-medical-alt fa-2x text-success"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-3">
-                    <div class="stats-card danger">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="stats-number">5</div>
-                                <div class="text-muted">Hasil Lab Pending</div>
-                            </div>
-                            <i class="fas fa-vial fa-2x text-danger"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Features -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="feature-section">
-                        <h4 class="mb-4">
-                            <i class="fas fa-clipboard-list text-primary"></i>
-                            Fitur Utama
-                        </h4>
-                        
-                        <div class="feature-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-calendar-alt text-primary me-3"></i>
-                                <div>
-                                    <h6 class="mb-1">Lihat daftar jadwal konsultasi hari ini</h6>
-                                    <small class="text-muted">dari <code>jadwal_konsultasi</code></small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-users text-warning me-3"></i>
-                                <div>
-                                    <h6 class="mb-1">Lihat daftar pasien yang berkonsultasi</h6>
-                                    <small class="text-muted">dari <code>konsultasi</code> (status: <span class="badge bg-warning">menunggu</span> / <span class="badge bg-success">selesai</span>)</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-file-medical text-success me-3"></i>
-                                <div>
-                                    <h6 class="mb-1">Isi dan lihat rekam medis pasien</h6>
-                                    <small class="text-muted">dari <code>rekam_medis</code></small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-flask text-danger me-3"></i>
-                                <div>
-                                    <h6 class="mb-1">Lihat hasil lab pasien</h6>
-                                    <small class="text-muted">dari <code>hasil_lab</code></small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-robot text-info me-3"></i>
-                                <div>
-                                    <h6 class="mb-1">Lihat prediksi dan rekomendasi dari LLM & SPK</h6>
-                                    <small class="text-muted">dari <code>spk_hasil</code> dan <code>llm_rekomendasi</code></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="feature-section">
-                        <h4 class="mb-4">
-                            <i class="fas fa-sitemap text-secondary"></i>
-                            Alur Data
-                        </h4>
-                        
-                        <div class="data-flow">
-                            <div>dokter.id</div>
-                            <div class="data-flow-item">jadwal_konsultasi.dokter_id</div>
-                            <div class="data-flow-item ms-4">pasien_id</div>
-                            <div class="data-flow-item ms-5">konsultasi</div>
-                            <div class="data-flow-item ms-6">rekam_medis</div>
-                            <div class="data-flow-item ms-7">hasil_lab</div>
-                            <div class="data-flow-item ms-8">spk_hasil</div>
-                            <div class="data-flow-item ms-9">llm_rekomendasi</div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <div class="feature-section">
-                        <h4 class="mb-4">
-                            <i class="fas fa-bolt text-warning"></i>
-                            Quick Actions
-                        </h4>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Tambah Jadwal
-                            </button>
-                            <button class="btn btn-success">
-                                <i class="fas fa-edit"></i> Update Rekam Medis
-                            </button>
-                            <button class="btn btn-info">
-                                <i class="fas fa-search"></i> Cari Pasien
-                            </button>
-                            <button class="btn btn-warning">
-                                <i class="fas fa-chart-line"></i> Lihat Statistik
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="online">Sistem Aktif</span>
+      <span class="active">Semua Layanan Tersedia</span>
     </div>
 
-    
+    <!-- Statistik -->
+    <section class="stats">
+      <div class="card blue">
+        <h3><i class="fas fa-calendar-check"></i> Jadwal Hari Ini</h3>
+        <p><?= $jadwal_hari_ini ?> Konsultasi</p>
+      </div>
+      <div class="card green">
+        <h3><i class="fas fa-user-injured"></i> Total Pasien</h3>
+        <p><?= $total_pasien ?> Pasien</p>
+      </div>
+      <div class="card yellow">
+        <h3><i class="fas fa-file-medical"></i> Rekam Medis Bulan Ini</h3>
+        <p><?= $rekam_medis_bulan_ini ?> Entry</p>
+      </div>
+    </section>
+
+    <!-- Menu Fitur -->
+    <section class="features dokter">
+      <h2><i class="fas fa-stethoscope"></i> Fitur Dokter</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <i class="fas fa-users"></i>
+          <h4>Lihat Daftar Pasien</h4>
+          <button onclick="location.href='index.php?page=list-pasien'">Lihat</button>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-calendar-alt"></i>
+          <h4>Jadwal Konsultasi</h4>
+          <button onclick="location.href='jadwal.php'">Lihat</button>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-paper-plane"></i>
+          <h4>Kirim Rujukan</h4>
+          <button onclick="location.href='rujukan.php'">Kirim</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Dokter -->
+    <section class="tools dokter">
+      <h2><i class="fas fa-toolbox"></i> Dokter Tools</h2>
+      <button class="tool-btn blue">
+        <i class="fas fa-plus-circle"></i> Tambah Catatan Medis
+      </button>
+      <button class="tool-btn blue">
+        <i class="fas fa-flask"></i> Lihat Hasil Lab
+      </button>
+      <button class="tool-btn blue">
+        <i class="fas fa-print"></i> Cetak Riwayat
+      </button>
+    </section>
+
+  </div>
+</body>
+</html>
