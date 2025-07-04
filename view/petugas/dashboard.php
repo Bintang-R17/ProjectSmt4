@@ -27,7 +27,6 @@ $jumlah_rujukan = 2;
     <header class="navbar navbar-petugas">
       <div class="welcome">
         <h1>Dashboard Petugas</h1>
-        <p>Selamat datang kembali, semoga sehat selalu! ✨</p>
       </div>
       <div class="profile">
         <i class="fas fa-bell"></i>
@@ -36,17 +35,17 @@ $jumlah_rujukan = 2;
           <div class="dropdown-content">
             <a href="#">Profile</a>
             <a href="#">Pengaturan</a>
-            <a href="#">Logout</a>
+            <a href="index.php?page=logout">Logout</a>
           </div>
         </div>
       </div>
     </header>
 
     <!-- Status Bar -->
-    <div class="status-bar">
+    <!-- <div class="status-bar">
       <span class="online">System Online</span>
       <span class="active">All Services Active</span>
-    </div>
+    </div> -->
 
     <!-- Statistik -->
     <section class="stats">
@@ -74,14 +73,9 @@ $jumlah_rujukan = 2;
           <button onclick="location.href='tambah_pasien.php'">Tambah</button>
         </div>
         <div class="feature-item">
-          <i class="fas fa-list-alt"></i>
-          <h4>Kelola Antrian</h4>
-          <button onclick="location.href='antrian.php'">Lihat</button>
-        </div>
-        <div class="feature-item">
           <i class="fas fa-paper-plane"></i>
           <h4>Kelola Rujukan</h4>
-          <button onclick="location.href='rujukan.php'">Kelola</button>
+          <button onclick="location.href='index.php?page=daftar-rujukan'">Kelola</button>
         </div>
         <div class="feature-item">
           <i class="fas fa-print"></i>
@@ -99,14 +93,9 @@ $jumlah_rujukan = 2;
           <button onclick="location.href='hubungi_dokter.php'">Hubungi</button>
         </div>
         <div class="feature-item">
-          <i class="fas fa-file-export"></i>
-          <h4>Export Data</h4>
-          <button onclick="location.href='export.php'">Export</button>
-        </div>
-        <div class="feature-item">
           <i class="fas fa-calendar-alt"></i>
           <h4>Kelola Jadwal</h4>
-          <button onclick="location.href='index.php?page=jadwal_konsultasi'">Kelola</button>
+          <button onclick="location.href='index.php?page=manage-jadwal'">Kelola</button>
         </div>
       </div>
     </section>

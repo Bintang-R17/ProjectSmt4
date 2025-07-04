@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 19, 2025 at 11:42 AM
+-- Generation Time: Jun 24, 2025 at 03:05 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -60,6 +60,28 @@ INSERT INTO `dokter` (`id`, `user_id`, `spesialisasi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hari_kosong`
+--
+
+CREATE TABLE `hari_kosong` (
+  `id` int NOT NULL,
+  `hari` enum('Senin','Selasa','Rabu','Kamis','Jumat','Sabtu') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_dokter` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hari_kosong`
+--
+
+INSERT INTO `hari_kosong` (`id`, `hari`, `id_dokter`) VALUES
+(66, 'Senin', 7),
+(67, 'Selasa', 7),
+(68, 'Kamis', 7),
+(69, 'Jumat', 7);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hasil_lab`
 --
 
@@ -68,15 +90,17 @@ CREATE TABLE `hasil_lab` (
   `pasien_id` int NOT NULL,
   `tanggal` date NOT NULL,
   `catatan` text,
-  `jenis_id` int DEFAULT NULL
+  `jenis_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `hasil_lab`
 --
 
-INSERT INTO `hasil_lab` (`id`, `pasien_id`, `tanggal`, `catatan`, `jenis_id`) VALUES
-(1, 67, '2025-06-17', 'Pasien mengalami gejala pegal dan meriang', 1);
+INSERT INTO `hasil_lab` (`id`, `pasien_id`, `tanggal`, `catatan`, `jenis_id`, `user_id`) VALUES
+(2, 67, '2025-06-17', 'Pemeriksaan Iseng', 2, 67),
+(101, 2, '2025-06-20', 'Pasien mengeluh lemas dan pusing.', 2, 67);
 
 -- --------------------------------------------------------
 
@@ -96,19 +120,27 @@ CREATE TABLE `hasil_parameter` (
 --
 
 INSERT INTO `hasil_parameter` (`id`, `hasil_lab_id`, `parameter_id`, `nilai`) VALUES
-(1, 1, 53, '11.8'),
-(2, 1, 54, '35'),
-(3, 1, 55, '4.2'),
-(4, 1, 56, '13000'),
-(5, 1, 57, '180000'),
-(6, 1, 58, '85'),
-(7, 1, 59, '28'),
-(8, 1, 60, '33'),
-(9, 1, 61, '65'),
-(10, 1, 62, '25'),
-(11, 1, 63, '5'),
-(12, 1, 64, '3'),
-(13, 1, 65, '2');
+(27, 2, 1, '11.8'),
+(28, 2, 66, '35'),
+(29, 2, 67, '4.2'),
+(30, 2, 68, '13000'),
+(31, 2, 69, '180000'),
+(32, 2, 70, '85'),
+(33, 2, 71, '28'),
+(34, 2, 72, '33'),
+(35, 2, 73, '65'),
+(36, 2, 74, '25'),
+(37, 2, 75, '5'),
+(38, 2, 76, '3'),
+(39, 2, 77, '2'),
+(40, 2, 78, '1'),
+(41, 101, 1, '14.2'),
+(42, 101, 2, '8000'),
+(43, 101, 74, '55'),
+(44, 101, 75, '30'),
+(45, 101, 76, '10'),
+(46, 101, 77, '3'),
+(47, 101, 78, '0.5');
 
 -- --------------------------------------------------------
 
@@ -118,11 +150,22 @@ INSERT INTO `hasil_parameter` (`id`, `hasil_lab_id`, `parameter_id`, `nilai`) VA
 
 CREATE TABLE `jadwal_konsultasi` (
   `id` int NOT NULL,
-  `dokter_id` int NOT NULL,
-  `pasien_id` int NOT NULL,
+  `id_dokter` int NOT NULL,
+  `id_pasien` int NOT NULL,
+  `nama_pasien` varchar(100) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `jam` time DEFAULT NULL,
   `waktu` datetime NOT NULL,
-  `status` enum('terjadwal','selesai','batal') DEFAULT 'terjadwal'
+  `status` enum('terjadwal','selesai','batal') DEFAULT 'terjadwal',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `jadwal_konsultasi`
+--
+
+INSERT INTO `jadwal_konsultasi` (`id`, `id_dokter`, `id_pasien`, `nama_pasien`, `tanggal`, `jam`, `waktu`, `status`, `created_at`) VALUES
+(1, 7, 1, 'Asd', '2025-06-17', '19:44:43', '2025-06-24 14:24:59', 'terjadwal', '2025-06-24 14:40:00');
 
 -- --------------------------------------------------------
 
@@ -140,7 +183,18 @@ CREATE TABLE `jenis_pemeriksaan` (
 --
 
 INSERT INTO `jenis_pemeriksaan` (`id`, `nama`) VALUES
-(1, 'Cek Darah');
+(2, 'hematologi'),
+(3, 'urinalisis'),
+(4, 'kimia_darah'),
+(5, 'fungsi_hati'),
+(6, 'elektrolit'),
+(7, 'fungsi_ginjal'),
+(8, 'lipid_profile'),
+(9, 'diabetes'),
+(10, 'tiroid'),
+(11, 'immunologi'),
+(12, 'hepatitis'),
+(13, 'torch');
 
 -- --------------------------------------------------------
 
@@ -156,6 +210,13 @@ CREATE TABLE `konsultasi` (
   `tanggal_konsultasi` datetime DEFAULT CURRENT_TIMESTAMP,
   `status` enum('menunggu','selesai') DEFAULT 'menunggu'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `konsultasi`
+--
+
+INSERT INTO `konsultasi` (`id`, `pasien_id`, `dokter_id`, `keluhan`, `tanggal_konsultasi`, `status`) VALUES
+(1, 67, 65, 'dsaadsa', '2025-06-24 21:24:34', 'menunggu');
 
 -- --------------------------------------------------------
 
@@ -180,27 +241,31 @@ CREATE TABLE `parameter_pemeriksaan` (
   `id` int NOT NULL,
   `jenis_id` int DEFAULT NULL,
   `nama_parameter` varchar(100) DEFAULT NULL,
-  `satuan` varchar(20) DEFAULT NULL
+  `satuan` varchar(20) DEFAULT NULL,
+  `nilai_min` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `nilai_max` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `parameter_pemeriksaan`
 --
 
-INSERT INTO `parameter_pemeriksaan` (`id`, `jenis_id`, `nama_parameter`, `satuan`) VALUES
-(53, 1, 'Hemoglobin (Hb)', 'g/dL'),
-(54, 1, 'Hematokrit (Ht)', '%'),
-(55, 1, 'Eritrosit (RBC)', 'juta/μL'),
-(56, 1, 'Leukosit (WBC)', 'ribu/μL'),
-(57, 1, 'Trombosit (Plt)', 'ribu/μL'),
-(58, 1, 'MCV', 'fL'),
-(59, 1, 'MCH', 'pg'),
-(60, 1, 'MCHC', 'g/dL'),
-(61, 1, 'Neutrofil', '%'),
-(62, 1, 'Limfosit', '%'),
-(63, 1, 'Monosit', '%'),
-(64, 1, 'Eosinofil', '%'),
-(65, 1, 'Basofil', '%');
+INSERT INTO `parameter_pemeriksaan` (`id`, `jenis_id`, `nama_parameter`, `satuan`, `nilai_min`, `nilai_max`) VALUES
+(1, 2, 'Hemoglobin', 'g/dL', '13.5', '18'),
+(2, 2, 'Leukosit', 'x10^3/µL', '4000', '11000'),
+(66, 2, 'Hematokrit', '%', '40.0', '50'),
+(67, 2, 'RBC', 'juta/µL', '4.5', '6'),
+(68, 2, 'WBC', 'ribu/µL', '4.0', '11'),
+(69, 2, 'Trombosit', 'ribu/µL', '150', '450'),
+(70, 2, 'MCV', 'fL', '80', '100'),
+(71, 2, 'MCH', 'pg', '27', '31'),
+(72, 2, 'MCHC', 'g/dL', '32', '35'),
+(73, 2, 'LED', 'mm/jam', '0', '15'),
+(74, 2, 'Neutrofil', '%', '50', '70'),
+(75, 2, 'Limfosit', '%', '20', '40'),
+(76, 2, 'Monosit', '%', '2', '8'),
+(77, 2, 'Eosinofil', '%', '1', '4'),
+(78, 2, 'Basofil', '%', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -277,14 +342,6 @@ CREATE TABLE `spk_hasil` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `spk_hasil`
---
-
-INSERT INTO `spk_hasil` (`id`, `hasil_lab_id`, `prediksi`, `confidence`, `created_at`) VALUES
-(1, 1, 'Anemia', 78, '2025-06-05 05:34:21'),
-(2, 1, 'Anemia', 78, '2025-06-05 05:34:21');
-
 -- --------------------------------------------------------
 
 --
@@ -305,9 +362,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `nama_lengkap`, `role`) VALUES
 (2, 'asd', '$2y$10$kl9hG0Bm6uVdHVDdC.M.e.K8CjoLxQXet8jzDbt./5AFBh313bqGu', 'Rizqi Anugrahaa', 'admin'),
-(65, '123', '$2y$10$saKYnNkIlWpBLyfXAnllQOa.FTmiMR70cm2N/SlrsDTLHPt9U9n1a', '123', 'dokter'),
+(65, '123', '$2y$10$saKYnNkIlWpBLyfXAnllQOa.FTmiMR70cm2N/SlrsDTLHPt9U9n1a', 'Bintang', 'dokter'),
 (66, 'qwe', '$2y$10$d8Gw12MKuXptX.s.6t7p/.utj3e19emWj3FZY0GJtx56HZFafA8Ra', 'qwe', 'petugas'),
-(67, 'zxc', '$2y$10$Fvg8AtdlqFkxlvnP0qFikeJBUPCyRzVBx4tkPg5m1nGTOG2RGKSBK', 'zxc', 'pasien');
+(67, 'zxc', '$2y$10$Fvg8AtdlqFkxlvnP0qFikeJBUPCyRzVBx4tkPg5m1nGTOG2RGKSBK', 'zxc', 'pasien'),
+(72, 'wer', '$2y$10$zTtyPaLbjQiFHa9cqvUaieO4n0oIQXwGhKWxjP75rdrrJZpMeclha', 'wer', 'pasien');
 
 --
 -- Indexes for dumped tables
@@ -327,12 +385,20 @@ ALTER TABLE `dokter`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `hari_kosong`
+--
+ALTER TABLE `hari_kosong`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_dokter` (`id_dokter`);
+
+--
 -- Indexes for table `hasil_lab`
 --
 ALTER TABLE `hasil_lab`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pasien_id` (`pasien_id`),
-  ADD KEY `jenis_id` (`jenis_id`);
+  ADD KEY `jenis_id` (`jenis_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `hasil_parameter`
@@ -347,8 +413,8 @@ ALTER TABLE `hasil_parameter`
 --
 ALTER TABLE `jadwal_konsultasi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `dokter_id` (`dokter_id`),
-  ADD KEY `pasien_id` (`pasien_id`);
+  ADD KEY `dokter_id` (`id_dokter`),
+  ADD KEY `pasien_id` (`id_pasien`);
 
 --
 -- Indexes for table `jenis_pemeriksaan`
@@ -432,34 +498,40 @@ ALTER TABLE `dokter`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `hari_kosong`
+--
+ALTER TABLE `hari_kosong`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
 -- AUTO_INCREMENT for table `hasil_lab`
 --
 ALTER TABLE `hasil_lab`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `hasil_parameter`
 --
 ALTER TABLE `hasil_parameter`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `jadwal_konsultasi`
 --
 ALTER TABLE `jadwal_konsultasi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jenis_pemeriksaan`
 --
 ALTER TABLE `jenis_pemeriksaan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `konsultasi`
 --
 ALTER TABLE `konsultasi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `llm_rekomendasi`
@@ -471,7 +543,7 @@ ALTER TABLE `llm_rekomendasi`
 -- AUTO_INCREMENT for table `parameter_pemeriksaan`
 --
 ALTER TABLE `parameter_pemeriksaan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT for table `pasien`
@@ -501,7 +573,7 @@ ALTER TABLE `spk_hasil`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- Constraints for dumped tables
@@ -520,11 +592,18 @@ ALTER TABLE `dokter`
   ADD CONSTRAINT `dokter_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `hari_kosong`
+--
+ALTER TABLE `hari_kosong`
+  ADD CONSTRAINT `hari_kosong_ibfk_1` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `hasil_lab`
 --
 ALTER TABLE `hasil_lab`
   ADD CONSTRAINT `hasil_lab_ibfk_1` FOREIGN KEY (`pasien_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `hasil_lab_ibfk_2` FOREIGN KEY (`jenis_id`) REFERENCES `jenis_pemeriksaan` (`id`);
+  ADD CONSTRAINT `hasil_lab_ibfk_2` FOREIGN KEY (`jenis_id`) REFERENCES `jenis_pemeriksaan` (`id`),
+  ADD CONSTRAINT `hasil_lab_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `hasil_parameter`
@@ -537,8 +616,8 @@ ALTER TABLE `hasil_parameter`
 -- Constraints for table `jadwal_konsultasi`
 --
 ALTER TABLE `jadwal_konsultasi`
-  ADD CONSTRAINT `jadwal_konsultasi_ibfk_1` FOREIGN KEY (`dokter_id`) REFERENCES `dokter` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `jadwal_konsultasi_ibfk_2` FOREIGN KEY (`pasien_id`) REFERENCES `pasien` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `jadwal_konsultasi_ibfk_1` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `jadwal_konsultasi_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `konsultasi`

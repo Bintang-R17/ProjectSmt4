@@ -9,7 +9,7 @@ $hasil_lab_saya = 1;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard Pasien</title>
-  <link rel="stylesheet" href="http://localhost/projectSmt4/assets/css/dashboard.css" />
+  <link rel="stylesheet" href="/projectsmt4/assets/css/dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body class="pasien">
@@ -41,7 +41,7 @@ $hasil_lab_saya = 1;
           <div class="dropdown-content">
             <a href="#">Profil</a>
             <a href="#">Pengaturan</a>
-            <a href="logout.php" onclick="return confirm('Yakin ingin logout?')">Logout</a>
+            <a href="index.php?page=logout" onclick="return confirm('Yakin ingin logout?')">Logout</a>
           </div>
         </div>
       </div>
@@ -79,6 +79,11 @@ $hasil_lab_saya = 1;
           <button onclick="location.href='jadwal_saya.php'">Lihat</button>
         </div>
         <div class="feature-item">
+          <i class="fas fa-calendar-alt"></i>
+          <h4>Request Jadwal</h4>
+          <button onclick="location.href='index.php?page=request-jadwal'">Lihat</button>
+        </div>
+        <div class="feature-item">
           <i class="fas fa-file-medical"></i>
           <h4>Rekam Medis</h4>
           <button onclick="location.href='rekam_saya.php'">Lihat</button>
@@ -94,13 +99,13 @@ $hasil_lab_saya = 1;
     <!-- Tools -->
     <section class="tools">
       <h2><i class="fas fa-toolbox"></i> Alat Bantu Pasien</h2>
-      <button class="tool-btn green">
+      <button class="tool-btn blue">
         <i class="fas fa-edit"></i> Perbarui Profil
       </button>
       <button class="tool-btn green">
         <i class="fas fa-envelope-open-text"></i> Kirim Pesan
       </button>
-      <button class="tool-btn green">
+      <button class="tool-btn yellow">
         <i class="fas fa-file-pdf"></i> Cetak Rekam Medis
       </button>
     </section>

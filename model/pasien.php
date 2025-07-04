@@ -46,27 +46,18 @@ class Pasien extends User {
     }
 
     // READ ONE
-    public function readOne() {
-        $query = "SELECT p.*, u.username, u.nama_lengkap 
-                  FROM " . $this->table_name . " p
-                  LEFT JOIN users u ON p.user_id = u.id 
-                  WHERE p.id = ? LIMIT 1";
+    public function readOne($id = null) {
+        $id = $id ?? $this->id;
+        $query = "SELECT p.*, u.nama_lengkap FROM pasien p 
+                JOIN users u ON p.user_id = u.id 
+                WHERE p.id = ? LIMIT 1";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $this->id);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
-        
         $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        
-        if($row) {
-            $this->user_id = $row['user_id'];
-            $this->nik = $row['nik'];
-            $this->alamat = $row['alamat'];
-            $this->tanggal_lahir = $row['tanggal_lahir'];
-            return $row;
-        }
-        return false;
+        return $result->fetch_assoc(); // return array
     }
+
 
     // UPDATE
     public function update() {

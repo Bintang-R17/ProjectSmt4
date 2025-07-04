@@ -1,14 +1,22 @@
-<!-- views/pasien/index.php -->
+<?php
+// Diasumsikan $data_pasien sudah di-query dari controller
+?>
+
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Daftar Pasien</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { padding: 8px; border: 1px solid #ccc; }
-    </style>
+
+    <!-- Tautkan CSS eksternal -->
+    <link rel="stylesheet" href="/ProjectSmt4/assets/css/pasien-style.css">
+
+    <!-- (Opsional) Tambahkan Font Awesome jika ingin ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<div class="container">
     <h2>Daftar Pasien</h2>
     <table>
         <thead>
@@ -29,10 +37,19 @@
                     <td><?= htmlspecialchars($row['username']) ?></td>
                     <td><?= htmlspecialchars($row['alamat']) ?></td>
                     <td><?= $row['tanggal_lahir'] ?></td>
-                    <td><a href="index.php?page=detail-pasien&id=<?= $row['user_id'] ?>">Detail</a></td>
+                    <td>
+                        <a class="aksi-link" href="index.php?page=detail-pasien&id=<?= $row['user_id'] ?>">
+                            <i class="fas fa-vial"></i> Hasil Lab
+                        </a> |
+                        <a class="aksi-link" href="index.php?page=rekam-medis-pasien&id=<?= $row['id'] ?>">
+                            <i class="fas fa-notes-medical"></i> Rekam Medis
+                        </a>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
+</div>
+
 </body>
 </html>

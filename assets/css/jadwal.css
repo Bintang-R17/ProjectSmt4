@@ -1,0 +1,137 @@
+/* Reset dan layout dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f4f6f8;
+  padding: 20px;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Judul dan ikon */
+h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Form styling */
+form {
+  margin-top: 1rem;
+}
+
+label {
+  font-weight: 500;
+  margin-top: 1rem;
+  display: block;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Checkbox group khusus dokter */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  flex: 1 1 30%;
+}
+
+/* Tabel jadwal */
+table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+th {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Role color indicators */
+.dokter-page .container {
+  border-left: 8px solid #0066cc;
+}
+
+.pasien-page .container {
+  border-left: 8px solid #28a745;
+}
+
+.petugas-page .container {
+  border-left: 8px solid #ff9800;
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+  .checkbox-group {
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 1rem;
+  }
+
+  th,
+  td {
+    font-size: 0.9rem;
+  }
+}

@@ -152,7 +152,7 @@ class UserController {
         $petugasList = $user->getByRole('petugas');
         $pasienList = $user->getByRole('pasien');
 
-    include_once __DIR__ . '/../view/admin/manage/dokter.php';
+    include_once __DIR__ . '/../view/admin/manage/manage.php';
 }
 }
 ?>

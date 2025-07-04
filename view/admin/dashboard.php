@@ -11,19 +11,20 @@ $system_health = "98%";
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard Admin</title>
-  <link rel="stylesheet" href="http://localhost/projectSmt4/assets/css/dashboard.css" />
+  <link rel="stylesheet" href="/projectsmt4/assets/css/dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js" />
+<style></style>
 </head>
 <body class="admin">
   <div class="sidebar admin">
     <h2><i class="fas fa-user-shield"></i> Admin Panel</h2>
     <ul>
       <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-      <li><a href="#"><i class="fas fa-users"></i> User Management</a></li>
+      <li><a href="index.php?page=manage-user"><i class="fas fa-users"></i> User Management</a></li>
       <li><a href="#"><i class="fas fa-chart-bar"></i> Statistics</a></li>
       <li><a href="#"><i class="fas fa-cogs"></i> System</a></li>
-      <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      <li><a href="index.php?page=logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </div>
 
@@ -31,7 +32,7 @@ $system_health = "98%";
     <header class="navbar navbar-admin">
       <div class="welcome">
         <h1>Dashboard Admin</h1>
-        <p>Selamat datang kembali, semoga sehat selalu! ✨</p>
+        <p>Selamat datang kembali, semoga sehat selalu! </p>
       </div>
       <div class="profile">
         <i class="fas fa-bell"></i>
@@ -81,9 +82,44 @@ $system_health = "98%";
     </section>
 
     <!-- Chart Statistik -->
-    <section class="chart">
+     <section class="chart-container">
+      <h3>Jumlah Konsultasi</h3>
       <canvas id="konsultasiChart" height="100"></canvas>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const ctxBar = document.getElementById('konsultasiChart').getContext('2d');
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+        datasets: [{
+          label: 'Jumlah Konsultasi',
+          data: [100, 150, 180, 220, 260, 350],
+          backgroundColor: 'rgba(0, 123, 255, 0.6)',
+          borderColor: '#007bff',
+          borderWidth: 1, borderRadius: 6, barThickness: 40
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+        },
+        scales: {
+          y: {
+            beginAtZero: true, ticks: {
+              stepSize: 50
+            }
+          }
+        }
+      }
+      });
+      </script>
+      </body>
+      </html>
+
+
 
     <!-- Fitur Admin -->
     <section class="features">
@@ -92,7 +128,7 @@ $system_health = "98%";
         <div class="feature-item">
           <i class="fas fa-users-cog"></i>
           <h4>Kelola semua user</h4>
-          <button onclick="location.href='kelola_user.php'">Kelola</button>
+          <button onclick="location.href='index.php?page=manage-user'">Kelola</button>
         </div>
         <div class="feature-item">
           <i class="fas fa-chart-pie"></i>
@@ -123,8 +159,8 @@ $system_health = "98%";
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const ctx = document.getElementById('konsultasiChart').getContext('2d');
-    new Chart(ctx, {
+    const ctxLine = document.getElementById('konsultasiChart').getContext('2d');
+    new Chart(ctxLine, {
       type: 'line',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],

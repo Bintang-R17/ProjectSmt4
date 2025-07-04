@@ -2,6 +2,7 @@
 
 include_once __DIR__ . '/autoload/autoloads.php';
 
+startSession();
 $page = $_GET['page'] ?? 'login'; // default login
 
 switch ($page) {
@@ -51,9 +52,13 @@ switch ($page) {
         break;
 
     case 'dashboard-dokter':
-        // checkRole('dokter');
+        checkRole('dokter');
+        $db = (new Database())->getConnection(); // koneksi DB
+        $dokterModel = new Dokter($db);
         require 'view/dokter/dashboard.php';
         break;
+
+
 
     case 'dashboard-petugas':
         checkRole('petugas');
@@ -111,14 +116,56 @@ switch ($page) {
         break;
     
     case 'detail-hasil-lab':
-    $controller = new MedicalAnalysisController();
-    $controller->showLabResultDetail($_GET['id']); // id = hasil_lab_id
-    break;
+        $controller = new MedicalAnalysisController();
+        $controller->showLabResultDetail($_GET['id']); // id = hasil_lab_id
+        break;
+
+    case 'list-jadwal':
+        $controller = new JadwalController();
+        $controller->listJadwal();
+        break;
+
+    case 'manage-jadwal':
+        $controller = new JadwalController();
+        $controller->index();
+        break;
+
+    case 'request-jadwal':
+        $controller = new JadwalController();
+        $controller->mintaKonsultasi();
+        break;
     
-    // case 'jadwal-konsultasi':
-    //     $petugas = new JadwalController();
-    //     $petugas->listJadwal();
-    //     break;
+    case 'periksa':
+        $controller = new JadwalController();
+        $controller->formPemeriksaan();
+        break;
+
+    case 'simpan-pemeriksaan':
+        $controller = new JadwalController();
+        $controller->simpanPemeriksaan();
+        break;
+
+    case 'rekam-medis-pasien':
+        $controller = new JadwalController();
+        $controller->rekamMedisPasien($_GET['id']); // id = pasien_id
+        break;
+
+    case 'form-rujukan':
+        $controller = new RujukanController();
+        $controller->createForm();
+        break;
+
+    case 'rujukan-proses':
+        $controller = new RujukanController();
+        $controller->store();
+        break;
+
+    case 'daftar-rujukan':
+        checkRole('petugas'); 
+        $controller = new RujukanController();
+        $controller->listRujukanPetugas();
+        break;
+
 
     default:
         echo "404 - Halaman tidak ditemukan.";

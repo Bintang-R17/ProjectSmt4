@@ -36,29 +36,6 @@ class Dokter extends User {
         return $this->conn->query($query);
     }
 
-    /** READ satu dokter berdasarkan ID */
-    public function readOne() {
-        $query = "SELECT d.*, u.username, u.nama_lengkap 
-                  FROM {$this->table_name} d
-                  LEFT JOIN users u ON d.user_id = u.id 
-                  WHERE d.id = ? LIMIT 1";
-        $stmt = $this->conn->prepare($query);
-        if (!$stmt) return false;
-
-        $stmt->bind_param("i", $this->id);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if ($row) {
-            $this->user_id = $row['user_id'];
-            $this->nik = $row['spesialisasi'];
-            return $row;
-        }
-        return false;
-    }
-
     /** UPDATE spesialisasi dokter */
     public function update() {
         $query = "UPDATE {$this->table_name} SET spesialisasi = ? WHERE id = ?";
@@ -79,28 +56,16 @@ class Dokter extends User {
         return $stmt->execute();
     }
 
-    /** GET dokter berdasarkan user_id */
     public function getByUserId($user_id) {
-        $query = "SELECT * FROM {$this->table_name} WHERE user_id = ? LIMIT 1";
-        $stmt = $this->conn->prepare($query);
-        if (!$stmt) return false;
+    $query = "SELECT * FROM dokter WHERE user_id = ? LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
 
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
 
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if ($row) {
-            $this->id = $row['id'];
-            $this->user_id = $row['user_id'];
-            $this->nik = $row['spesialisasi'];
-            return true;
-        }
-        return false;
-    }
-
-    /** GET semua dokter berdasarkan spesialisasi */
     public function getBySpesialisasi($spesialisasi) {
         $query = "SELECT d.*, u.username, u.nama_lengkap 
                   FROM {$this->table_name} d
